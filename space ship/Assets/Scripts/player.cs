@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class player : MonoBehaviour
 { 
-    public  static Vector3 vectorfoo= new Vector3(1,1,1);
+    public  static Vector3 PlayerPos, vectorfoo= new Vector3(1,1,1);
     public Transform shipPos,shipF,shipBU,shipBD;
     Ship barry=new Ship(1,1,1,1);
     
@@ -17,16 +17,17 @@ public class player : MonoBehaviour
         print(barry.GetHealth()+" "+barry.GetFuel()+" "+barry.GetSpeedM());
     }
 
-    void Update()
+    void FixedUpdate()
     {
+        PlayerPos = transform.position;
         moveTowardsMouse();
         barry.UpdateShipPos( shipPos.position,shipF.position,shipBU.position, shipBD.position);
         bullet_P.direction = barry.getShipFace();
         if (Time.timeSinceLevelLoad >= 5)
         {
-           // Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, transform.position + new Vector3(0, 0, -10), Time.deltaTime * (float)(0.6)); 
+           Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, transform.position + new Vector3(0, 0, -10), Time.deltaTime * (float)(0.6)); 
         }
-        print(barry.getShipFace());
+        print(PlayerPos);
 
      
      }
