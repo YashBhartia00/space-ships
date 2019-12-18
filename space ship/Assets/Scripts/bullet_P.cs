@@ -39,4 +39,5 @@ public class bullet_P : MonoBehaviour
     void Update()
     {
     }
+
 }

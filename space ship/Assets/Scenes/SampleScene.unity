@@ -164,8 +164,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0, z: 0}
-  blockPreFab: {fileID: 4971134858941435484, guid: c822a1c7642fe8247a41c6ba7b2fc309,
+  blockPreFab: {fileID: 5698640974098018350, guid: c822a1c7642fe8247a41c6ba7b2fc309,
     type: 3}
+  lastSpawn: 0
 --- !u!1 &242261995
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,7 +233,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.0995016, g: 0.24414188, b: 0.49056602, a: 0}
+  m_BackGroundColor: {r: 0.745283, g: 0.745283, b: 0.745283, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -322,9 +323,11 @@ GameObject:
   - component: {fileID: 1235259345}
   - component: {fileID: 1235259344}
   - component: {fileID: 1235259342}
+  - component: {fileID: 1235259343}
+  - component: {fileID: 1235259346}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -345,6 +348,40 @@ MonoBehaviour:
   shipF: {fileID: 2018929907}
   shipBU: {fileID: 1934146720}
   shipBD: {fileID: 242261996}
+  fuel: 100
+  speedM: 2
+  health: 100
+--- !u!60 &1235259343
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235259341}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.32, y: 0.32}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.094345056, y: 0.06946804}
+      - {x: -0.09238818, y: -0.05337888}
+      - {x: 0.04597044, y: -0.04849031}
+      - {x: 0.10336664, y: -0.0006686114}
+      - {x: 0.10140976, y: 0.020977693}
+      - {x: 0.051509626, y: 0.06693022}
 --- !u!212 &1235259344
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -412,6 +449,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &1235259346
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235259341}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 50
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1523349871
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,5 +604,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoints: {fileID: 2018929907}
-  blockPreFab: {fileID: 2576595243980624217, guid: 73bbddb4983006a4e99813376130ba16,
+  blockPreFab: {fileID: 7660212782813924202, guid: 73bbddb4983006a4e99813376130ba16,
     type: 3}

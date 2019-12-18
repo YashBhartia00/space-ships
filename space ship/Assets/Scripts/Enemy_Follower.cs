@@ -5,8 +5,9 @@ using UnityEngine;
 public class Enemy_Follower : MonoBehaviour
 {
     Vector3 homeLoc;
-    public float startTime, stayTime = 100, speed = 5f;
+    public float startTime, stayTime = 100, speed = 5f, DPS = 2;
     public static float spawnInterval = 1;
+    public bool follow = true,frozen = false, freeze = false ;
     void Start()
     {
         homeLoc = transform.position;
@@ -15,12 +16,27 @@ public class Enemy_Follower : MonoBehaviour
 
     void FixedUpdate()
     {
-        MoveTowardsPl(speed);
-        GoAway();
+        CheckFreeze(freeze);
+        if (!frozen){
+            MoveTowardsPl(speed);
+            GoAway();
+        } 
+        if(transform.position == homeLoc) { follow = true; }
+
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        print("FREEZZEE");
+        if(collision.gameObject.tag == "Freeze")
+        {
+            freeze = true;
+        }
     }
     public void MoveTowardsPl(float EFspeed)
     {
-        if (Vector3.Distance(player.PlayerPos, homeLoc)<0.7)
+        if (Vector3.Distance(player.PlayerPos, homeLoc)<0.7 && follow)
         {
             transform.position =
              Vector3.MoveTowards(transform.position, player.PlayerPos, Time.deltaTime * EFspeed);
@@ -37,5 +53,19 @@ public class Enemy_Follower : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    public void CheckFreeze(bool Freeze)
+    {
+        if (Freeze && !frozen)
+        {
+            Invoke("UnFreeze", 5);
+            frozen = true;
+            freeze = false;
+        }
+        
+    }
+    public void UnFreeze()
+    {
+        frozen = false;
     }
 }

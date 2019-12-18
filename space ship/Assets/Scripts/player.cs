@@ -4,41 +4,46 @@ using UnityEngine;
 using System.Diagnostics;
 using UnityEngine.UI;
 
-
 public class player : MonoBehaviour
 { 
     public  static Vector3 PlayerPos, vectorfoo= new Vector3(1,1,1);
     public Transform shipPos,shipF,shipBU,shipBD;
-    Ship barry=new Ship(1,1,1,1);
+    Vector3 shipFace;
+    public float fuel=100, speedM = 2;
+    public int health = 100;
     
+    
+
     void Start()
     { 
-        Ship barry = new Ship(100,100,1000,2);
-        print(barry.GetHealth()+" "+barry.GetFuel()+" "+barry.GetSpeedM());
     }
 
     void FixedUpdate()
     {
         PlayerPos = transform.position;
         moveTowardsMouse();
-        barry.UpdateShipPos( shipPos.position,shipF.position,shipBU.position, shipBD.position);
-        bullet_P.direction = barry.getShipFace();
+        bullet_P.direction = getShipFace();
         if (Time.timeSinceLevelLoad >= 5)
         {
            Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, transform.position + new Vector3(0, 0, -10), Time.deltaTime * (float)(0.6)); 
         }
-        print(PlayerPos);
-
+   
      
      }
+    public Vector2 getShipFace()
+    {
+        //print(shipPos);
+        return new Vector2(shipF.position.x - shipPos.position.x, shipF.position.y - shipPos.position.y);
+    }
     void moveTowardsMouse(){
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0,0,10);
         //move
          if(Input.GetMouseButton(0)){
              transform.position = 
-             Vector3.MoveTowards(transform.position,mousePosition , Time.deltaTime * (float)barry.GetSpeedM());
+             Vector3.MoveTowards(transform.position,mousePosition , Time.deltaTime * speedM);
         }
         //rotate
         transform.right =new Vector2(mousePosition.x - transform.position.x, mousePosition.y - transform.position.y); 
     }
+    public static void reduceHealth() { }
 }
