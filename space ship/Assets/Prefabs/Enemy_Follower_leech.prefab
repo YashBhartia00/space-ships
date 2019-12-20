@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1180234163694218187}
   - component: {fileID: 6139560703630079689}
   m_Layer: 0
-  m_Name: Enemy_Follower
+  m_Name: Enemy_Follower_leech
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0b375eb8705cea64da5d7ebb580188a1, type: 3}
-  m_Color: {r: 0.4056604, g: 0.10524209, b: 0.34282723, a: 1}
+  m_Color: {r: 0.39215687, g: 0.078431375, b: 0.3137255, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -97,11 +97,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startTime: 0
-  freezeStart: 0
   stayTime: 10
   speed: 1
   DPS: 2
-  follow: 1
+  follow: 0
+  frozen: 0
   freeze: 0
 --- !u!60 &4755069715784962860
 PolygonCollider2D:

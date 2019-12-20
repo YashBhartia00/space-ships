@@ -11,6 +11,7 @@ public class player : MonoBehaviour
     Vector3 shipFace;
     public float fuel=100, speedM = 2;
     public int health = 100;
+    public GameObject healthBar;
     
     
 
@@ -27,7 +28,7 @@ public class player : MonoBehaviour
         {
            Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, transform.position + new Vector3(0, 0, -10), Time.deltaTime * (float)(0.6)); 
         }
-   
+        reduceHealth();
      
      }
     public Vector2 getShipFace()
@@ -45,5 +46,8 @@ public class player : MonoBehaviour
         //rotate
         transform.right =new Vector2(mousePosition.x - transform.position.x, mousePosition.y - transform.position.y); 
     }
-    public static void reduceHealth() { }
+    public void reduceHealth() {
+        healthBar.transform.localScale = new Vector3 (health * 0.01f,1,1);
+        healthBar.transform.localPosition = new Vector3(-50+health*0.5f, 0, 0);
+    }
 }

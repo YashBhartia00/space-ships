@@ -8,10 +8,21 @@ public class Enemy_Follower : MonoBehaviour
     public float startTime, stayTime = 100, speed = 5f, DPS = 2;
     public static float spawnInterval = 1;
     public bool follow = true,frozen = false, freeze = false ;
+
+
+    //colors: make new script
+    Color freezeblue,leechpurple;
+    
+    
+
     void Start()
-    {
+    {   //colors: make new script
+        ColorUtility.TryParseHtmlString("#50B7D1", out freezeblue);
+        ColorUtility.TryParseHtmlString("#641450", out leechpurple);
+
         homeLoc = transform.position;
         startTime = Time.time;
+        
     }
 
     void FixedUpdate()
@@ -54,18 +65,24 @@ public class Enemy_Follower : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+
     public void CheckFreeze(bool Freeze)
     {
         if (Freeze && !frozen)
         {
             Invoke("UnFreeze", 5);
+            SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
+            sr.color = freezeblue;
             frozen = true;
             freeze = false;
         }
-        
-    }
+
+    }    //make script to derive this as enemy behaviours
     public void UnFreeze()
     {
         frozen = false;
+        SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
+        sr.color = leechpurple;
     }
 }
