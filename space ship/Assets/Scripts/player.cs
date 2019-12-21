@@ -10,7 +10,7 @@ public class player : MonoBehaviour
     public Transform shipPos,shipF,shipBU,shipBD;
     Vector3 shipFace;
     public float fuel=100, speedM = 2;
-    public int health = 100;
+    public float health = 100;
     public GameObject healthBar;
     
     

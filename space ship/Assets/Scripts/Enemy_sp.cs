@@ -18,7 +18,7 @@ public class Enemy_sp : MonoBehaviour
         if (TimeToSpawn(Enemy_Follower.spawnInterval))
         {
             spawnPoint = GenerateSp();
-            print(spawnPoint);
+            //print(spawnPoint);
             Instantiate(blockPreFab, spawnPoint, Quaternion.identity);
         }
     }

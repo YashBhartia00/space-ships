@@ -144,3 +144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e3b6cc5dab361649a770e22321938db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  types:
+  - Freeze
+  - Leech
