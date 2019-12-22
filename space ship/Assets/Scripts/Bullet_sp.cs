@@ -7,27 +7,16 @@ public class Bullet_sp : MonoBehaviour
 
     public Transform spawnPoints;
     public GameObject blockPreFab;
-    public float bulletRate = 0.3f;
+    float a, timeTillNextBullet, bulletRate = 0.2f;
+        //bulletRate lower means faster bullets
 
-    // Start is called before the first frame update
-    void Start()
+    void Update()
+
     {
-        StartCoroutine(bullets());
-    }
-
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        bullets();
-    }
-
-    IEnumerator bullets()
-    {
-        while (true)
+        if (Time.timeSinceLevelLoad >= timeTillNextBullet)
         {
             Instantiate(blockPreFab, spawnPoints.position, Quaternion.identity);
-            yield return new WaitForSeconds(bulletRate);
+            timeTillNextBullet += bulletRate;
         }
     }
 }

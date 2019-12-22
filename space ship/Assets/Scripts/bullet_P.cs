@@ -5,13 +5,15 @@ using UnityEngine;
 public class bullet_P : MonoBehaviour
 {
     public static Vector2 direction;
-    public string[] types = new string[2] { "Freeze", "Leech" };    
-    float speed=6000;
+    public string[] types = new string[3] { "Freeze", "Leech","Follow" };    
+    float speed=4000;
     void Start()
     {
+        types = new string[3] { "Freeze", "Leech", "Follow" };
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        transform.gameObject.tag = types[0];
+        transform.gameObject.tag = types[1];
         rb.AddForce(direction * speed);
+
      
     }
     void Update()

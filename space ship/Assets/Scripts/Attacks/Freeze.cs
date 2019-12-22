@@ -18,7 +18,7 @@ public class Freeze : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         print("FREEZE");
-        Enemy_Follower freezeS = collision.collider.gameObject.GetComponent<Enemy_Follower>();
+        enemy freezeS = collision.collider.gameObject.GetComponent<enemy>();
         freezeS.freeze = true;
     }
 }

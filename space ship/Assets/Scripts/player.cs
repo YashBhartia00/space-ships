@@ -12,22 +12,22 @@ public class player : MonoBehaviour
     public float fuel=100, speedM = 2;
     public float health = 100;
     public GameObject healthBar;
+    public Joystick movestick,rotatestick;
     
     
 
     void Start()
-    { 
+    {
+        //joystick = FindObjectOfType<Joystick>();
     }
 
     void FixedUpdate()
     {
         PlayerPos = transform.position;
-        moveTowardsMouse();
+        moveJoystick();
         bullet_P.direction = getShipFace();
-        if (Time.timeSinceLevelLoad >= 5)
-        {
-           Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, transform.position + new Vector3(0, 0, -10), Time.deltaTime * (float)(0.6)); 
-        }
+
+        Camera.main.transform.position = transform.position + new Vector3(0, 0, -10);
         reduceHealth();
      
      }
@@ -36,18 +36,20 @@ public class player : MonoBehaviour
         //print(shipPos);
         return new Vector2(shipF.position.x - shipPos.position.x, shipF.position.y - shipPos.position.y);
     }
-    void moveTowardsMouse(){
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0,0,10);
-        //move
-         if(Input.GetMouseButton(0)){
-             transform.position = 
-             Vector3.MoveTowards(transform.position,mousePosition , Time.deltaTime * speedM);
-        }
-        //rotate
-        transform.right =new Vector2(mousePosition.x - transform.position.x, mousePosition.y - transform.position.y); 
+
+    void moveJoystick()
+    {
+        var rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody.velocity = new Vector3(movestick.Horizontal * speedM, movestick.Vertical * speedM, 0);
+        //print(movestick.Horizontal + " " + movestick.Vertical);
+        transform.right = new Vector2(rotatestick.Horizontal,rotatestick.Vertical);
     }
     public void reduceHealth() {
         healthBar.transform.localScale = new Vector3 (health * 0.01f,1,1);
         healthBar.transform.localPosition = new Vector3(-50+health*0.5f, 0, 0);
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

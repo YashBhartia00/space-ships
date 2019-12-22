@@ -2,25 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Follower : MonoBehaviour
+public class enemy : MonoBehaviour
 {
     Vector3 homeLoc;
     public float startTime, stayTime = 300, speed = 5f, DPS = 2, health = 3;
-    public static float spawnInterval = 1;
+    public static float spawnInterval = 0.5f;
     public bool follow = true,frozen, freeze, leech ;
-    //public int health = 2;
+    public int hitNums = 5;
+
     //SpriteRenderer sr = new SpriteRenderer();
 
 
     //colors: make new script
-    Color freezeblue,leechpurple,leechedpurple;
+    Color freezeblue,attackorange,leechedpurple;
     
     
 
     void Start()
     {   //colors: make new script
         ColorUtility.TryParseHtmlString("#50B7D1", out freezeblue);
-        ColorUtility.TryParseHtmlString("#641450", out leechpurple);
+        ColorUtility.TryParseHtmlString("#FF764C", out attackorange);
         ColorUtility.TryParseHtmlString("#AB799F", out leechedpurple);
         //SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
         homeLoc = transform.position;
@@ -45,17 +46,15 @@ public class Enemy_Follower : MonoBehaviour
 
 
     private void OnCollisionEnter2D(Collision2D collision)
-    {
+    {   if(collision.gameObject.tag == "Player") { hitNums -= 1; if (hitNums <= 0) { Destroy(gameObject); } }
         if(collision.gameObject.tag == "Freeze"){freeze = true; Destroy(collision.gameObject); }
         if(collision.gameObject.tag == "Leech") { StartCoroutine(leechAction(findSprite())); Destroy(collision.gameObject); }
-        
-
     }
    
 
     public void MoveTowardsPl(float EFspeed)
     {
-        if (Vector3.Distance(player.PlayerPos, homeLoc)<0.7 && follow)
+        if (Vector3.Distance(player.PlayerPos, homeLoc)<2 && follow)
         {
             transform.position =
              Vector3.MoveTowards(transform.position, player.PlayerPos, Time.deltaTime * EFspeed);
@@ -96,7 +95,7 @@ public class Enemy_Follower : MonoBehaviour
     {   
         yield return new WaitForSeconds(5);
         frozen = false;
-        sr.color = leechpurple;
+        sr.color = attackorange;
     }
 
     IEnumerator leechAction(SpriteRenderer sr)
@@ -105,11 +104,11 @@ public class Enemy_Follower : MonoBehaviour
         // change to leech amount
         while (true)
         {
-            sr.color = Color.Lerp(leechpurple, leechedpurple, Mathf.PingPong(Time.time * 5, 1.0f));
+            sr.color = Color.Lerp(attackorange, leechedpurple, Mathf.PingPong(Time.time * 5, 1.0f));
             health -= 0.01f;
             GameObject pl = GameObject.FindGameObjectWithTag("Player");
             player pla = pl.gameObject.GetComponent<player>();
-            pla.health += 0.01f;
+            pla.health += 0.005f;
 
             //print(health);
             yield return null;

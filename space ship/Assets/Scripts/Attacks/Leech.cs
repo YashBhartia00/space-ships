@@ -21,7 +21,7 @@ public class Leech : MonoBehaviour
         {
             player script = collision.gameObject.GetComponent<player>();
             script.health -= (int)leechAmount;
-            Enemy_Follower leechBOI = gameObject.GetComponent<Enemy_Follower>();
+            enemy leechBOI = gameObject.GetComponent<enemy>();
             leechBOI.follow = false;
             print("Health = " + script.health);
 
