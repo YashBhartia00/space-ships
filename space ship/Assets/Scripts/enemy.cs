@@ -6,7 +6,7 @@ public class enemy : MonoBehaviour
 {
     Vector3 homeLoc;
     public float startTime, stayTime = 300, speed = 5f, DPS = 2, health = 3;
-    public static float spawnInterval = 0.5f;
+    public static float spawnInterval = 1;
     public bool follow = true,frozen, freeze, leech ;
     public int hitNums = 5;
 
