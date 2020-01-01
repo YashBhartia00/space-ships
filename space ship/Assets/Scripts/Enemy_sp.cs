@@ -5,9 +5,9 @@ using UnityEngine;
 public class Enemy_sp : MonoBehaviour
 {
     public Vector3 spawnPoint;
-    public GameObject blockPreFab;
+    public GameObject[] blockPreFabs = new GameObject[2];
     public float lastSpawn;
-    public int enemyRemain = 29;
+    public int enemyRemain = 29,spawnInterval=2;
     public GameObject[] enemiesGO = new GameObject [30];
     //enemy[] enemyScripts = new enemy[30];
     
@@ -18,12 +18,12 @@ public class Enemy_sp : MonoBehaviour
 
     void Update()
     {
-        if (TimeToSpawn(enemy.spawnInterval))
+        if (TimeToSpawn(spawnInterval))
         {
             spawnPoint = GenerateSp();
             if (enemyRemain >= 0)
             {
-                enemiesGO[enemyRemain] = Instantiate(blockPreFab, spawnPoint, Quaternion.identity);
+                enemiesGO[enemyRemain] = Instantiate(blockPreFabs[0], spawnPoint, Quaternion.identity);
                 enemyRemain -= 1;
             }
             else
@@ -60,11 +60,14 @@ public class Enemy_sp : MonoBehaviour
         {
             if(enemiesGO[i] == null)
             {
-                enemiesGO[i] = Instantiate(blockPreFab, sp, Quaternion.identity);
+                int enemyType = (int)Random.Range(0, 2);
+                enemiesGO[i] = Instantiate(blockPreFabs[enemyType], sp, Quaternion.identity);
                 break;
             }
         }
     }
+
+    
 
 }
 

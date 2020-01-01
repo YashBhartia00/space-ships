@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Leech : MonoBehaviour
+public class enemyAttackCollide : MonoBehaviour
 {
-    public float leechAmount = 2;
+    public float damage = 2;
     void Start()
     {
 
@@ -20,7 +20,7 @@ public class Leech : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             player script = collision.gameObject.GetComponent<player>();
-            script.health -= (int)leechAmount;
+            script.health -= (int)damage;
             enemy leechBOI = gameObject.GetComponent<enemy>();
             leechBOI.follow = false;
             print("Health = " + script.health);

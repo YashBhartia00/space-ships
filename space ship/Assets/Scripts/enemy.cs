@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class enemy : MonoBehaviour
 {
+
+    //damage dealing has another script attached called enemyattackcollide  : put that in this
+
     Vector3 homeLoc;
-    public float startTime, stayTime = 300, speed = 5f, DPS = 2, health = 3;
+    public float startTime, stayTime = 300, speed = 5f, health = 5;
     public static float spawnInterval = 1;
     public bool follow = true,frozen, freeze, leech ;
     public int hitNums = 5;
@@ -51,7 +54,6 @@ public class enemy : MonoBehaviour
         if(collision.gameObject.tag == "Leech") { StartCoroutine(leechAction(findSprite())); Destroy(collision.gameObject); }
     }
    
-
     public void MoveTowardsPl(float EFspeed)
     {
         if (Vector3.Distance(player.PlayerPos, homeLoc)<2 && follow)
@@ -76,15 +78,12 @@ public class enemy : MonoBehaviour
     {
         return gameObject.GetComponent<SpriteRenderer>();
     }
-
-
     public void CheckFreeze(bool Freeze,SpriteRenderer sr)
     {
         if (Freeze && !frozen)
         {
             //Invoke("UnFreeze", 5);
             StartCoroutine(UnFreeze(sr));
-            
             sr.color = freezeblue;
             frozen = true;
             freeze = false;
@@ -97,7 +96,6 @@ public class enemy : MonoBehaviour
         frozen = false;
         sr.color = attackorange;
     }
-
     IEnumerator leechAction(SpriteRenderer sr)
     {
         //health -= 1;
