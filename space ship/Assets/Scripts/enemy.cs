@@ -13,7 +13,7 @@ public class enemy : MonoBehaviour
     public bool follow = true,frozen, freeze, leech ;
     public int hitNums = 5;
 
-    //SpriteRenderer sr = new SpriteRenderer();
+    public GameObject deatheffect;
 
 
     //colors: make new script
@@ -49,11 +49,20 @@ public class enemy : MonoBehaviour
 
 
     private void OnCollisionEnter2D(Collision2D collision)
-    {   if(collision.gameObject.tag == "Player") { hitNums -= 1; if (hitNums <= 0) { Destroy(gameObject); } }
-        if(collision.gameObject.tag == "Freeze"){freeze = true; Destroy(collision.gameObject); }
-        if(collision.gameObject.tag == "Leech") { StartCoroutine(leechAction(findSprite())); Destroy(collision.gameObject); }
+    {
+        if (collision.gameObject.tag == "Player") { hitNums -= 1; if (hitNums <= 0) { Destroy(gameObject); } }
+        else if (collision.gameObject.tag == "Freeze") { freeze = true; Destroy(collision.gameObject); }
+        else if (collision.gameObject.tag == "Leech") { StartCoroutine(leechAction(findSprite())); Destroy(collision.gameObject); }
+        else if (collision.gameObject.tag == "Enemy") { }
+        else { health -= 3; Destroy(collision.gameObject); }
+
     }
-   
+
+    private void OnDestroy()
+    {
+        Instantiate(deatheffect, transform.position, Quaternion.identity);
+    }
+
     public void MoveTowardsPl(float EFspeed)
     {
         if (Vector3.Distance(player.PlayerPos, homeLoc)<2 && follow)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class player : MonoBehaviour
 { 
@@ -11,10 +12,10 @@ public class player : MonoBehaviour
     Vector3 shipFace;
     public float fuel=100, speedM = 2;
     public float health = 100;
-    public GameObject healthBar;
+    public GameObject healthBar,deatheffect;
     public Joystick movestick,rotatestick;
-    
-    
+    public static int BulletType=0;   //{"Normal", "Freeze", "Leech","Follow" }
+
 
     void Start()
     {
@@ -49,7 +50,25 @@ public class player : MonoBehaviour
         healthBar.transform.localPosition = new Vector3(-50+health*0.5f, 0, 0);
         if (health <= 0)
         {
-            Destroy(gameObject);
+            Time.timeScale = 0.1f;
+            StartCoroutine(restart());
+            deatheffect.SetActive(true);
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
+    }
+   /* private void OnDestroy()
+    {
+        //Instantiate(deatheffect, transform.position, Quaternion.identity);
+        
+        StartCoroutine(restart());
+        //SceneManager.LoadScene("StartScreen");
+    }*/
+
+
+    IEnumerator restart()
+    {
+        yield return new WaitForSeconds(0.15f);
+        SceneManager.LoadScene("StartScreen");
+        Time.timeScale = 1f;
     }
 }

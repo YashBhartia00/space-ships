@@ -5,7 +5,7 @@ using UnityEngine;
 public class enemyRange : MonoBehaviour
 {
     Vector3 homeLoc;
-    public float startTime,prog,stayTime = 700, speed = 1f, DPS = 3.5f, health = 9, timeBeforeAttack = 2;
+    public float startTime,prog,stayTime = 1500, speed = 1f, DPS = 3.5f, health = 10, timeBeforeAttack = 2;
     float dirx, diry;
     Color freezeblue, arrowteal, chargedgreen, leechedpurple;
     bool attacking,frozen, freeze;
@@ -14,7 +14,7 @@ public class enemyRange : MonoBehaviour
     public int hitNums = 5;
 
     public Transform spawnPoints;
-    public GameObject blockPreFab;
+    public GameObject blockPreFab, deatheffect;
     float a, timeTillNextBullet, bulletRate = 0.2f;
     //bulletRate lower means faster bullets
 
@@ -70,8 +70,8 @@ public class enemyRange : MonoBehaviour
     public void attack(SpriteRenderer sr)
     {
         
-        dirx = direction.x;
-        diry = direction.y;
+        dirx = direction.x / Vector2.SqrMagnitude(direction);
+        diry = direction.y / Vector2.SqrMagnitude(direction);
         Vector3 blah = new Vector3(dirx * -3, diry * -3, transform.position.z);
         //print("attacking");
         EnemyBullet.direction = direction;
@@ -80,7 +80,7 @@ public class enemyRange : MonoBehaviour
         //print(blah);
     }
 
-   IEnumerator attacks()
+    IEnumerator attacks()
     {
         //sr.color = Color.Lerp(arrowteal, chargedgreen, 5);
         yield return new WaitForSeconds(2);
@@ -90,7 +90,7 @@ public class enemyRange : MonoBehaviour
 
 
 
-    //from the other enemy & no modifications ake anohter script PLEASE
+    //from the other enemy & no modifications ake another script PLEASE
     public SpriteRenderer findSprite()
     {
         return gameObject.GetComponent<SpriteRenderer>();
@@ -98,13 +98,20 @@ public class enemyRange : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player") { hitNums -= 1 ; if (hitNums <= 0) { Destroy(gameObject); } }
-        if (collision.gameObject.tag == "Freeze") { freeze = true; Destroy(collision.gameObject); }
-        if (collision.gameObject.tag == "Leech") { StartCoroutine(leechAction(findSprite())); Destroy(collision.gameObject); }
+        if (collision.gameObject.tag == "Player") { hitNums -= 1; if (hitNums <= 0) { Destroy(gameObject); } }
+        else if (collision.gameObject.tag == "Freeze") { freeze = true; Destroy(collision.gameObject); }
+        else if (collision.gameObject.tag == "Leech") { StartCoroutine(leechAction(findSprite())); Destroy(collision.gameObject); }
+        else if (collision.gameObject.tag == "Enemy") { }
+        else { health -= 3; Destroy(collision.gameObject); }
+    }
+
+    private void OnDestroy()
+    {
+        Instantiate(deatheffect, transform.position, Quaternion.identity);
     }
     public void Destroy()
     {
-        if (((Time.time - startTime) > stayTime && transform.position == homeLoc) || health <= 0)
+        if (((Time.time - startTime) > stayTime) || health <= 0)
         {
             Destroy(gameObject);
         }

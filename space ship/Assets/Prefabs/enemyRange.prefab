@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 5206819277456751678}
   m_Layer: 0
   m_Name: enemyRange
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,8 +133,11 @@ MonoBehaviour:
   DPS: 3.5
   health: 9
   timeBeforeAttack: 2
+  hitNums: 5
   spawnPoints: {fileID: 4368187101846982543}
   blockPreFab: {fileID: 896798333034121610, guid: 3a872ab614077b648a80586eb8d061db,
+    type: 3}
+  deatheffect: {fileID: 8101690069327509921, guid: 5d9b47d4d2e168c48ad38eb3a703d326,
     type: 3}
 --- !u!50 &4368187103254924496
 Rigidbody2D:

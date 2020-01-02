@@ -8,13 +8,16 @@ public class closestEnemy : MonoBehaviour {
 	private Rigidbody2D rb;
 	[SerializeField] private float speed = 6f;
 	// Use this for initialization
-	public static bool follow;
+	public bool follow;
 
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
 		if(transform.gameObject.tag == "Follow")
 		{
 			follow = true;
+		} else
+		{
+			follow = false;
 		}
 	}
 

@@ -7,7 +7,7 @@ public class Bullet_sp : MonoBehaviour
 
     public Transform spawnPoints;
     public GameObject blockPreFab;
-    float a, timeTillNextBullet, bulletRate = 0.2f;
+    float a, timeTillNextBullet, bulletRate = 0.5f;
         //bulletRate lower means faster bullets
 
     void Update()

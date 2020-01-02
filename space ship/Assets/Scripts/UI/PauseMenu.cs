@@ -7,9 +7,12 @@ public class PauseMenu : MonoBehaviour
     public static bool GameIsPaused;
     public GameObject pauseMenuUI;
     public GameObject joystics;
+    public GameObject shopMenuUI;
+    public GameObject pauseButtonUI;
+
     void Update()
     {
-        if (Input.touchCount >4){
+       /* if (Input.touchCount >4){
             if (GameIsPaused)
             {
                 Resume();
@@ -18,13 +21,14 @@ public class PauseMenu : MonoBehaviour
             {
                 Pause();
             }
-        }
+        }*/
     }
 
-     public void Resume()
+    public void Resume()
     {
         pauseMenuUI.SetActive(false);
         joystics.SetActive(true);
+        pauseButtonUI.SetActive(true);
         Time.timeScale = 1f;
         GameIsPaused = false;
 
@@ -33,13 +37,21 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenuUI.SetActive(true);
         joystics.SetActive(false);
+        pauseButtonUI.SetActive(false);
         Time.timeScale = 0f;
         GameIsPaused = true;
     }
-
-    public void LoadMenu()
+    public void shopMenu()
     {
-        print("L");
+        if (!shopMenuUI.activeSelf)
+        {
+            shopMenuUI.SetActive(true);
+            pauseMenuUI.SetActive(false);
+        } else
+        {
+            shopMenuUI.SetActive(false);
+            pauseMenuUI.SetActive(true);
+        }
     }
     public void pauseButton()
     {

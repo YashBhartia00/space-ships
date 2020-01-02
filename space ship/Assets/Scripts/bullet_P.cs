@@ -5,19 +5,24 @@ using UnityEngine;
 public class bullet_P : MonoBehaviour
 {
     public static Vector2 direction;
-    public string[] types = new string[3] { "Freeze", "Leech","Follow" };    
-    float speed=4000;
+    public string[] types = new string[4] {"Normal", "Freeze", "Leech","Follow" };    
+    float a, speed=4000;
     void Start()
     {
-        types = new string[3] { "Freeze", "Leech", "Follow" };
+       types = new string[4] { "Normal", "Freeze", "Leech", "Follow" };
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        transform.gameObject.tag = types[1];
+        //print(player.BulletType);
+        transform.gameObject.tag = types[player.BulletType];
         rb.AddForce(direction * speed);
-
-     
+        a = Time.time;
+        print(transform.gameObject.tag);
     }
     void Update()
     {
+        if(Time.time- a >= 1)
+        {
+            Destroy(gameObject);
+        }
     }
 
 }

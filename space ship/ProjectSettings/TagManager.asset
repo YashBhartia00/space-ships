@@ -8,6 +8,8 @@ TagManager:
   - Freeze
   - Bullet
   - Follow
+  - Normal
+  - Enemy
   layers:
   - Default
   - TransparentFX

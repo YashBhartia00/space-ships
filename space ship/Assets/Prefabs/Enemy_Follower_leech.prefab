@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6139560703630079689}
   m_Layer: 0
   m_Name: Enemy_Follower_leech
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,13 +99,14 @@ MonoBehaviour:
   startTime: 0
   stayTime: 10
   speed: 1
-  DPS: 2
   health: 2
   follow: 0
   frozen: 0
   freeze: 0
   leech: 0
   hitNums: 5
+  deatheffect: {fileID: 2002407626136043713, guid: ff9f332a3a5e9e24da969f9084787702,
+    type: 3}
 --- !u!60 &4755069715784962860
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -148,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d648b3f80142b047bb04f9e4c092dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leechAmount: 1
+  damage: 2
 --- !u!50 &6139560703630079689
 Rigidbody2D:
   serializedVersion: 4
