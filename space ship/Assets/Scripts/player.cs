@@ -43,7 +43,7 @@ public class player : MonoBehaviour
         var rigidbody = GetComponent<Rigidbody2D>();
         rigidbody.velocity = new Vector3(movestick.Horizontal * speedM, movestick.Vertical * speedM, 0);
         //print(movestick.Horizontal + " " + movestick.Vertical);
-        transform.right = new Vector2(rotatestick.Horizontal,rotatestick.Vertical);
+        transform.up = new Vector2(rotatestick.Horizontal,rotatestick.Vertical);
     }
     public void reduceHealth() {
         healthBar.transform.localScale = new Vector3 (health * 0.01f,1,1);
@@ -54,6 +54,13 @@ public class player : MonoBehaviour
             StartCoroutine(restart());
             deatheffect.SetActive(true);
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            foreach (Transform child in transform)
+            {
+                if (child.gameObject.tag != "Effect")
+                {
+                    GameObject.Destroy(child.gameObject);
+                }
+            }
         }
     }
    /* private void OnDestroy()

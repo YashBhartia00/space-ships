@@ -10,6 +10,7 @@ TagManager:
   - Follow
   - Normal
   - Enemy
+  - Effect
   layers:
   - Default
   - TransparentFX
