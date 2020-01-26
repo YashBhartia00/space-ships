@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,18 +12,11 @@ public class PauseMenu : MonoBehaviour
     public GameObject shopMenuUI;
     public GameObject pauseButtonUI;
 
+    public score score;
+
     void Update()
     {
-       /* if (Input.touchCount >4){
-            if (GameIsPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
-        }*/
+        score = GameObject.FindGameObjectsWithTag("Score")[0].GetComponent<score>();
     }
 
     public void Resume()
@@ -40,6 +35,13 @@ public class PauseMenu : MonoBehaviour
         pauseButtonUI.SetActive(false);
         Time.timeScale = 0f;
         GameIsPaused = true;
+    }
+
+    public void MainMenu()
+    {
+        score.scoreNum = 0;
+        Time.timeScale = 1;
+        SceneManager.LoadScene("StartScreen");
     }
     public void shopMenu()
     {

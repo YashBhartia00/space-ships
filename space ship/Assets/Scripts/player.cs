@@ -16,6 +16,8 @@ public class player : MonoBehaviour
     public Joystick movestick,rotatestick;
     public static int BulletType=0;   //{"Normal", "Freeze", "Leech","Follow" }
 
+    public Vector2 rotations;
+
 
     void Start()
     {
@@ -26,6 +28,7 @@ public class player : MonoBehaviour
     {
         PlayerPos = transform.position;
         moveJoystick();
+
         bullet_P.direction = getShipFace();
 
         Camera.main.transform.position = transform.position + new Vector3(0, 0, -10);
@@ -42,8 +45,10 @@ public class player : MonoBehaviour
     {
         var rigidbody = GetComponent<Rigidbody2D>();
         rigidbody.velocity = new Vector3(movestick.Horizontal * speedM, movestick.Vertical * speedM, 0);
-        //print(movestick.Horizontal + " " + movestick.Vertical);
-        transform.up = new Vector2(rotatestick.Horizontal,rotatestick.Vertical);
+        if (rotatestick.Horizontal != 0 || rotatestick.Vertical != 0)
+        {
+            transform.up = new Vector2(rotatestick.Horizontal, rotatestick.Vertical);
+        }
     }
     public void reduceHealth() {
         healthBar.transform.localScale = new Vector3 (health * 0.01f,1,1);

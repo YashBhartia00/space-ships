@@ -1,17 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class enemyRange : MonoBehaviour
 {
     Vector3 homeLoc;
-    public float startTime,prog,stayTime = 1500, speed = 1f, DPS = 3.5f, health = 10, timeBeforeAttack = 2;
+    public float startTime,prog,stayTime = 1500, speed = 1f, DPS = 3.5f, health = 3, timeBeforeAttack = 2;
     float dirx, diry;
     Color freezeblue, arrowteal, chargedgreen, leechedpurple;
     bool attacking,frozen, freeze;
     Rigidbody2D rb;
     Vector2 direction;
     public int hitNums = 5;
+
+    public score score;
+
 
     public Transform spawnPoints;
     public GameObject blockPreFab, deatheffect;
@@ -25,6 +29,9 @@ public class enemyRange : MonoBehaviour
         ColorUtility.TryParseHtmlString("#AB799F", out leechedpurple);
         ColorUtility.TryParseHtmlString("#00FFDF", out arrowteal);
         ColorUtility.TryParseHtmlString("#3FD266", out chargedgreen);
+
+        score = GameObject.FindGameObjectsWithTag("Score")[0].GetComponent<score>();
+        
 
         homeLoc = transform.position;
         startTime = Time.time;
@@ -98,21 +105,23 @@ public class enemyRange : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player") { hitNums -= 1; if (hitNums <= 0) { Destroy(gameObject); } }
-        else if (collision.gameObject.tag == "Freeze") { freeze = true; Destroy(collision.gameObject); }
+        if (collision.gameObject.tag == "Player") { hitNums -= 1; if (hitNums <= 0) { Destroy(gameObject); score.scoreNum += 1; } }
+        else if (collision.gameObject.tag == "Freeze") { freeze = true; health -= 2; Destroy(collision.gameObject); }
         else if (collision.gameObject.tag == "Leech") { StartCoroutine(leechAction(findSprite())); Destroy(collision.gameObject); }
         else if (collision.gameObject.tag == "Enemy") { }
-        else { health -= 3; Destroy(collision.gameObject); }
+        else { health -= 1; Destroy(collision.gameObject); }
     }
 
     private void OnDestroy()
     {
         Instantiate(deatheffect, transform.position, Quaternion.identity);
+        
     }
     public void Destroy()
     {
         if (((Time.time - startTime) > stayTime) || health <= 0)
         {
+            if (health <= 0) { score.scoreNum += 2; }
             Destroy(gameObject);
         }
     }
@@ -141,7 +150,7 @@ public class enemyRange : MonoBehaviour
         while (true)
         {
             sr.color = Color.Lerp(arrowteal, leechedpurple, Mathf.PingPong(Time.time * 5, 1.0f));
-            health -= 0.01f;
+            health -= 0.005f;
             GameObject pl = GameObject.FindGameObjectWithTag("Player");
             player pla = pl.gameObject.GetComponent<player>();
             pla.health += 0.005f;
@@ -150,6 +159,8 @@ public class enemyRange : MonoBehaviour
             yield return null;
         }
     }
+
+
 
 
 

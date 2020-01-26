@@ -22,7 +22,7 @@ public class bullet_P : MonoBehaviour
     }
     void Update()
     {
-        if(Time.time- a >= 1.5f)
+        if(Time.time- a >= 0.75f)
         {
             Destroy(gameObject);
         }

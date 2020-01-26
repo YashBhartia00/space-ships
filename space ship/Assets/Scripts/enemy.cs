@@ -8,12 +8,13 @@ public class enemy : MonoBehaviour
     //damage dealing has another script attached called enemyattackcollide  : put that in this
 
     Vector3 homeLoc;
-    public float startTime, stayTime = 300, speed = 5f, health = 5;
+    public float startTime, stayTime = 300, speed = 5f, health = 2;
     public static float spawnInterval = 1;
     public bool follow = true,frozen, freeze, leech ;
     public int hitNums = 5;
 
     public GameObject deatheffect;
+    public score score;
 
 
     //colors: make new script
@@ -26,6 +27,7 @@ public class enemy : MonoBehaviour
         ColorUtility.TryParseHtmlString("#50B7D1", out freezeblue);
         ColorUtility.TryParseHtmlString("#FF764C", out attackorange);
         ColorUtility.TryParseHtmlString("#AB799F", out leechedpurple);
+        score = GameObject.FindGameObjectsWithTag("Score")[0].GetComponent<score>();
         //SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
         homeLoc = transform.position;
         startTime = Time.time;
@@ -50,11 +52,11 @@ public class enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player") { hitNums -= 1; if (hitNums <= 0) { Destroy(gameObject); } }
-        else if (collision.gameObject.tag == "Freeze") { freeze = true; Destroy(collision.gameObject); }
+        if (collision.gameObject.tag == "Player") { hitNums -= 1; if (hitNums <= 0) { Destroy(gameObject); score.scoreNum += 1; } }
+        else if (collision.gameObject.tag == "Freeze") { health -= 2;  freeze = true; Destroy(collision.gameObject); }
         else if (collision.gameObject.tag == "Leech") { StartCoroutine(leechAction(findSprite())); Destroy(collision.gameObject); }
         else if (collision.gameObject.tag == "Enemy") { }
-        else { health -= 3; Destroy(collision.gameObject); }
+        else { health -= 1; Destroy(collision.gameObject); }
 
     }
 
@@ -80,6 +82,7 @@ public class enemy : MonoBehaviour
     {
         if(((Time.time - startTime) > stayTime && transform.position == homeLoc)|| health<=0)
         {
+            if (health <= 0) { score.scoreNum += 1; }
             Destroy(gameObject);
         }
     }
@@ -112,7 +115,7 @@ public class enemy : MonoBehaviour
         while (true)
         {
             sr.color = Color.Lerp(attackorange, leechedpurple, Mathf.PingPong(Time.time * 5, 1.0f));
-            health -= 0.01f;
+            health -= 0.005f;
             GameObject pl = GameObject.FindGameObjectWithTag("Player");
             player pla = pl.gameObject.GetComponent<player>();
             pla.health += 0.005f;
